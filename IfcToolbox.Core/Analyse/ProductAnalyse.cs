@@ -66,11 +66,11 @@ namespace IfcToolbox.Core.Analyse
             foreach (var product in products)
             {
                 // a) Add the product and all its parents (storey -> building -> site -> project)
-                //CollectProductAndItsParents(product, requiredProducts);
+                CollectProductAndItsParents(product, requiredProducts);
 
-                if (product is IIfcSpatialStructureElement)
-                    foreach (var product2 in GetIfcParentProductsInHierarchy(product))
-                        requiredProducts.Add(product2);
+                //if (product is IIfcSpatialStructureElement)
+                //    foreach (var product2 in GetIfcParentProductsInHierarchy(product))
+                //        requiredProducts.Add(product2);
 
                 // b) If the product is a spatial element (like IfcSpace), 
                 //    also gather contained elements and sub‐spaces
