@@ -1,6 +1,4 @@
-﻿using IfcToolbox.Core.Convert;
-
-namespace IfcToolbox.Tools.Configurations
+﻿namespace IfcToolbox.Tools.Configurations
 {
     public static class ConfigFactory
     {

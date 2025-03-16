@@ -1,5 +1,4 @@
-﻿using IfcToolbox.Core.Convert;
-using IfcToolbox.Core.Utilities;
+﻿using IfcToolbox.Core.Utilities;
 using IfcToolbox.Examples.Samples;
 using IfcToolbox.Tests;
 using IfcToolbox.Tools.Configurations;
