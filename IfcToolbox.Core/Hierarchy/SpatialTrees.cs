@@ -17,33 +17,4 @@ namespace IfcToolbox.Core.Hierarchy
 
     }
 
-    public static class SpatialTreesExtention
-    {
-        public static SpatialTrees MergeTypeNodes(this IEnumerable<SpatialTrees> trees)
-        {
-            if (!trees.Any())
-                return null;
-            var self = trees.FirstOrDefault();
-            for (int i = 1; i < trees.Count(); i++)
-                self = self.MergeTypeNodes(trees.ToList()[i]);
-            return self;
-        }
-
-        public static SpatialTrees MergeTypeNodes(this SpatialTrees self, IEnumerable<SpatialTrees> others)
-        {
-            foreach (var other in others)
-                self = self.MergeTypeNodes(other);
-            return self;
-        }
-
-        public static SpatialTrees MergeTypeNodes(this SpatialTrees self, SpatialTrees other)
-        {
-            if (other.TypedNodes.Any())
-                foreach (var typedNode in other.TypedNodes)
-                    if (!self.TypedNodes.Where(x => x.Name == typedNode.Name).Any())
-                        self.TypedNodes.Add(typedNode);
-            return self;
-        }
-    }
-
 }

@@ -15,11 +15,5 @@ namespace IfcToolbox.Core.Hierarchy
             return result;
         }
 
-        public static SpatialTrees GetOnlyTypedNodes(IModel model, bool includeIfcSpace)
-        {
-            var result = new SpatialTrees();
-            result.TypedNodes.AddRange(HierarchyReader.GetTypedHierarchy(model, includeIfcSpace).Children);
-            return result;
-        }
     }
 }
