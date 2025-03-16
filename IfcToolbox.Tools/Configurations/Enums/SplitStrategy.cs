@@ -8,5 +8,6 @@
         BySite,
         ByBuilding,
         ByBuildingStorey,
+        ByUniqueGlobalId
     }
 }

@@ -94,5 +94,35 @@ namespace IfcToolbox.Tests
             using var model = IfcStore.Open(outputFileName);
             SplitterProcessor.Split(model, config, outputFileName);
         }
+
+        [Fact]
+        public static void SplitByGlobalUniqueId()
+        {
+            var filePath = LocalFiles.Ifc4_Revit_STR;
+            var outputFolder = LocalFiles.TestOutputFolder;
+            string outputFileName = ConsoleFile.GetOutputFileName(filePath, outputFolder, "");
+            ConsoleFile.CreateCopyIfcFile(filePath, outputFileName);
+            IConfigSplit config = ConfigFactory.CreateConfigSplit();
+            config.SplitStrategy = SplitStrategy.ByUniqueGlobalId;
+            config.SelectedItems = new List<string> { "3qkt5lpVnBtwyr6X955ubt", "0NWseyvsH7_gBW225aGtuD" };
+            config.Suffix = "SplitByUniqueGlobalId";
+            using var model = IfcStore.Open(outputFileName);
+            SplitterProcessor.Split(model, config, outputFileName);
+        }
+
+        [Fact]
+        public static void SplitByGlobalUniqueId_Space()
+        {
+            var filePath = LocalFiles.Ifc4_SampleHouse;
+            var outputFolder = LocalFiles.TestOutputFolder;
+            string outputFileName = ConsoleFile.GetOutputFileName(filePath, outputFolder, "");
+            ConsoleFile.CreateCopyIfcFile(filePath, outputFileName);
+            IConfigSplit config = ConfigFactory.CreateConfigSplit();
+            config.SplitStrategy = SplitStrategy.ByUniqueGlobalId;
+            config.SelectedItems = new List<string> { "3w0zWKm7n8SB1qbfwUzt0G" };
+            config.Suffix = "SplitByUniqueGlobalId";
+            using var model = IfcStore.Open(outputFileName);
+            SplitterProcessor.Split(model, config, outputFileName);
+        }
     }
 }

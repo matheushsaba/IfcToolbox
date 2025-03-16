@@ -115,6 +115,17 @@ namespace IfcToolbox.Core.Editors
             }
             return newPaths;
         }
+
+        /// <summary>
+        /// Generate sub-model only containing specific products in the IFC hierarchy.
+        /// </summary>
+        public static List<string> SplitByUniqueGlobalId(IfcStore model, bool keepLable, string sourceFilePath, IEnumerable<string> entitiyLables, string suffix = "ByUniqueGlobalId")
+        {
+            var generatedFilePath = ConsoleFile.AddSuffixToName(sourceFilePath, "_" + suffix);
+            var requiredProducts = ProductAnalyse.PrepareRequiredProductsByGlobalIds(model, entitiyLables);
+            InsertCopy.CopyProducts(model, generatedFilePath, requiredProducts, keepLable);
+            return new List<string> { generatedFilePath };
+        }
         #endregion
     }
 }

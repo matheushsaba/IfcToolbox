@@ -2,7 +2,7 @@
 {
     public class LocalFiles
     {
-        public const string TestOutputFolder = @"C:\Users\yoush\Desktop\IFC Files\Output";
+        public const string TestOutputFolder = @"C:\Users\Matheus\Desktop\IFC Files\Output";
 
         public const string Ifc2s3_Duplex_Electrical = "TestFiles\\Ifc2s3_Duplex_Electrical.ifc";
         public const string Ifc2x3_Duplex_Architecture = "TestFiles\\Ifc2x3_Duplex_Architecture.ifc";
