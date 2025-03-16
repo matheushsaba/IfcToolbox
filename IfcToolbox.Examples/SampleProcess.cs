@@ -29,7 +29,7 @@ namespace IfcToolbox.Examples
             //IfcAnonymizerSample.AnonymizeUserInfo(LocalFiles.Ifc4_SampleHouse.CopyToOutputFolder());
             //IfcAnonymizerSample.AnonymizeProductInfoWithRules(LocalFiles.Ifc4_SampleHouse.CopyToOutputFolder());
 
-            IfcValidatorSample.ValidatePropertyExistence(LocalFiles.Ifc4_Revit_ARC_FireRatingAdded.CopyToOutputFolder());
+            //IfcValidatorSample.ValidatePropertyExistence(LocalFiles.Ifc4_Revit_ARC_FireRatingAdded.CopyToOutputFolder());
 
             //SimulationProcessingTime();
         }

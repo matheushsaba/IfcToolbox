@@ -33,83 +33,6 @@ namespace IfcToolbox.Examples.Batch
             return files;
         }
 
-        public static List<TimeReport> IfcOptimizer_TimeEstimate(string outputFolder)
-        {
-            List<string> files = GetAllTestFiles();
-            List<TimeReport> reports = new List<TimeReport>();
-            foreach (var file in files)
-            {
-                var report = new TimeReport(file);
-                var estimateTime = TimeEstimator.ForOptimizerAsSeconds(file);
-                var realTime = GetRealTime(file, outputFolder);
-                report.AddProcessingTime(realTime, estimateTime);
-                report.LogDetail();
-                reports.Add(report);
-            }
-            reports.ToDataTable().SaveAsCsv(ConsoleFile.GetOutputFileName("IfcOptimizer_TimeEstimate", outputFolder, "", ".csv"));
-            return reports;
-
-            double GetRealTime(string inputFileName, string outputFolder)
-            {
-                Log.Information($"IfcOptimizer - Start");
-                string copiedIfcFile = ConsoleFile.GetOutputFileName(inputFileName, outputFolder);
-                ConsoleFile.CreateCopyIfcFile(inputFileName, copiedIfcFile);
-
-                Stopwatch Watch = new Stopwatch();
-                Watch.Start();
-                TimeSpan Start = Watch.Elapsed;
-
-                IConfigOptimize config = ConfigFactory.CreateConfigOptimize();
-                config.PrecisionOpen = true;
-                config.Precision = 4;
-                config.OptimizePoint = true;
-                config.OptimizePointList = true;
-                config.MergeOpen = true;
-                config.MergeOnlyResources = true;
-                config.MergeReversedEntities = true;
-                OptimizerProcessor.Process(copiedIfcFile, config);
-
-                TimeSpan elapsed = Watch.Elapsed - Start;
-                return elapsed.TotalSeconds;
-            }
-        }
-
-        public static List<TimeReport> IfcRelocator_TimeEstimate(string outputFolder)
-        {
-            Dictionary<string, int> files = new Dictionary<string, int>();
-            files.Add(LocalFiles.Ifc2x3_Duplex_Architecture, 38274); // ifcSite 38274
-            files.Add(LocalFiles.Ifc4_Revit_ARC, 3371); // ifcSite 3371
-
-            List<TimeReport> reports = new List<TimeReport>();
-            foreach (var file in files)
-            {
-                var report = new TimeReport(file.Key);
-                var estimateTime = 1;
-                var realTime = GetRealTime(file.Key, outputFolder, file.Value);
-                report.AddProcessingTime(realTime, estimateTime);
-                report.LogDetail();
-                reports.Add(report);
-            }
-            reports.ToDataTable().SaveAsCsv(ConsoleFile.GetOutputFileName("IfcRelocator_TimeEstimate", outputFolder, "", ".csv"));
-            return reports;
-
-            double GetRealTime(string inputFileName, string outputFolder, int entityLable)
-            {
-                Log.Information($"IfcRelocator - Start");
-                string copiedIfcFile = ConsoleFile.GetOutputFileName(inputFileName, outputFolder);
-                ConsoleFile.CreateCopyIfcFile(inputFileName, copiedIfcFile);
-
-                Stopwatch Watch = new Stopwatch();
-                Watch.Start();
-                TimeSpan Start = Watch.Elapsed;
-
-                IfcRelocatorSample.RelocateToOrigin(copiedIfcFile, entityLable);
-
-                TimeSpan elapsed = Watch.Elapsed - Start;
-                return elapsed.TotalSeconds;
-            }
-        }
-
         public static List<TimeReport> IfcSplitter_TimeEstimate(string outputFolder)
         {
             List<string> files = GetAllTestFiles();
@@ -140,41 +63,6 @@ namespace IfcToolbox.Examples.Batch
                 config.SplitStrategy = SplitStrategy.DataOnly;
                 using (var model = IfcStore.Open(copiedIfcFile))
                     SplitterProcessor.Split(model, config, copiedIfcFile);
-
-                TimeSpan elapsed = Watch.Elapsed - Start;
-                return elapsed.TotalSeconds;
-            }
-        }
-
-        public static List<TimeReport> IfcConverter_TimeEstimate(string outputFolder)
-        {
-            List<string> files = GetAllTestFiles();
-            List<TimeReport> reports = new List<TimeReport>();
-            foreach (var file in files)
-            {
-                var report = new TimeReport(file);
-                var estimateTime = TimeEstimator.ForConverterAsSeconds(file);
-                var realTime = GetRealTime(file, outputFolder);
-                report.AddProcessingTime(realTime, estimateTime);
-                report.LogDetail();
-                reports.Add(report);
-            }
-            reports.ToDataTable().SaveAsCsv(ConsoleFile.GetOutputFileName("IfcConverter_TimeEstimate", outputFolder, "", ".csv"));
-            return reports;
-
-            double GetRealTime(string inputFileName, string outputFolder)
-            {
-                Log.Information($"IfcConverter - Start");
-                string copiedIfcFile = ConsoleFile.GetOutputFileName(inputFileName, outputFolder);
-                ConsoleFile.CreateCopyIfcFile(inputFileName, copiedIfcFile);
-
-                Stopwatch Watch = new Stopwatch();
-                Watch.Start();
-                TimeSpan Start = Watch.Elapsed;
-
-                var convertOptionWarp = new ConvertOptionsWrap();
-                var config = ConfigFactory.CreateConfigConvert(convertOptionWarp, ConvertTargetFormat.OBJ);
-                ConverterProcessor.Process(copiedIfcFile, config);
 
                 TimeSpan elapsed = Watch.Elapsed - Start;
                 return elapsed.TotalSeconds;
